@@ -8,3 +8,6 @@ class Settings:
         self.FpS = 60
         self.bg_file = path.cwd() / 'assets' / 'images' / 'starbase.png'
         
+        self.ship_file = path.cwd() / 'assets' / 'images' / 'ship2(no bg).png'
+        self.ship_width = 40
+        self.ship_height = 60

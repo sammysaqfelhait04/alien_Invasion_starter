@@ -16,13 +16,16 @@ class AlienInvasion:
         self.running = True
         self.clock = pygame.time.Clock()
 
+        self.ship = Ship(self)  
+
     def run_game(self):
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
+                    self._check_events()
+                    self.update_screen()
+                    self.clock.tick(self.settings.FpS)
+    def _check_events(self):
+            
+                    self.ship.draw()
 self.screen.blit(self.bg_image, (0, 0))
 
             pygame.display.flip()
