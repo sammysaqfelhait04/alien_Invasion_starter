@@ -1,14 +1,15 @@
 import sys
 import pygame
 from settings import Settings
-from ship import Ship  
+from ship import Ship
 from arsenal import Arsenal
 
 class AlienInvasion:
     def __init__(self):
-        self.running = True
-        self.ship=pygame.time.Clock()
         pygame.init()
+        pygame.mixer.init()
+
+        self.running = True
         self.settings = Settings()
 
         self.screen = pygame.display.set_mode(
@@ -22,11 +23,8 @@ class AlienInvasion:
             (self.settings.screen_width, self.settings.screen_height)
         )
 
-
-        pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(self.settings.laser_sound_file)
         self.laser_sound.set_volume(0.7)
-
 
         self.clock = pygame.time.Clock()
         self.ship = Ship(self, Arsenal(self))
@@ -41,38 +39,28 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    self._check_keydown_events(event)
-                elif event.type == pygame.KEYUP:
-                    self._check_keyup_events(event)
-                
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
-            elif event.key == pygame.K_SPACE:
+        elif event.key == pygame.K_SPACE:
             self.ship.fire()
             self.laser_sound.play()
             self.laser_sound.fadeout(250)
-            
-
-            
-        elif event.key == pygame.K_k_q:
-    
-            self.ruunning = False
-        elif
-
-
+        elif event.key == pygame.K_q:
+            self.running = False
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = True
+            self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
-            elif event.key == pygame.K_q:
-            pygame.quit()
-                sys.exit()
+            self.ship.moving_left = False
 
     def _update_screen(self):
         self.screen.blit(self.bg_image, (0, 0))
